@@ -27,7 +27,7 @@ else:
     filtered = df
 
 # 只顯示想要的欄位（排除url，理由摘要已移除）
-show_cols = [col for col in ["裁判字號", "裁判日期", "申請人", "是否核准", "是否有抗告", "Gemini摘要", "判決連結"] if col in filtered.columns]
+show_cols = [col for col in ["裁判字號", "裁判日期", "申請人", "是否核准", "是否為抗告案", "Gemini摘要", "判決連結"] if col in filtered.columns]
 
 st.write(f"共 {len(filtered)} 筆公司破產判決摘要")
 st.write(filtered[show_cols].to_html(escape=False, index=False), unsafe_allow_html=True)
@@ -36,7 +36,7 @@ st.write(filtered[show_cols].to_html(escape=False, index=False), unsafe_allow_ht
 csv_df = filtered.copy()
 if "url" in csv_df.columns:
     csv_df["判決連結"] = csv_df["url"].apply(lambda x: f'=HYPERLINK("{x}", "點我看判決")')
-show_csv_cols = [col for col in ["裁判字號", "裁判日期", "申請人", "是否核准", "是否有抗告", "Gemini摘要", "判決連結"] if col in csv_df.columns]
+show_csv_cols = [col for col in ["裁判字號", "裁判日期", "申請人", "是否核准", "是否為抗告案", "Gemini摘要", "判決連結"] if col in csv_df.columns]
 csv = csv_df[show_csv_cols].to_csv(index=False, encoding="utf-8-sig")
 st.download_button(
     label="下載目前篩選結果 (CSV)",
